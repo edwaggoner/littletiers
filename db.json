@@ -1,0 +1,12 @@
+{
+  "posts": [
+    "hello world",
+    "hello world",
+    {
+      "id": 1,
+      "title": "lowdb is superb",
+      "published": true
+    },
+    "hello world"
+  ]
+}
