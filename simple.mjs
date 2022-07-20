@@ -21,26 +21,29 @@ await db.read()
 // If file.json doesn't exist, db.data will be null
 // Set default data
 db.data ||= { posts: [] }
-// db.data = db.data || { posts: [] } // for node < v15.x
 
-// Create and query items using plain JS
-db.data.posts.push({id: 1, title: 'lowdb is superb', published: true})
-db.data.posts[0]
 
-// You can also use this syntax if you prefer
-const { posts } = db.data
-posts.push('hello world')
+// Create items using plain JS
+db.data.posts.push({id: 1, title: 'lowdb is excellent', published: true})
+db.data.posts.push({id: 2, title: 'great', published: true})
+db.data.posts.push({id: 3, title: 'new own', published: false})
+db.data.posts.push({id: 4, title: 'random', published: false})
+
+// You can also use this syntax to create items, if you prefer:
+// const { posts } = db.data
+// // And then post this way:
+// posts.push('hello world')
+
 
 // Write db.data content to db.json
-await db.write()
+db.write()
 
-// init the data store
-// ---------------------------
-// YOUR CODE
+// Query an item using plain JS
+// db.data.posts[0]
 
-// add post
-// ----------------------------
-// YOUR CODE
+// Log the value (i.e., the contents) of the 'post' array to the console
+// console.log(db.data);
+// console.log(db.data.posts[3]);
 
 // count posts
 // ----------------------------
