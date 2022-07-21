@@ -1,6 +1,6 @@
 // add http server from express
     // import express
-const express = require('express');
+import express from 'express';
     // create instance of express
 const app = express();
 
@@ -26,31 +26,34 @@ const adapter = new JSONFileSync(file);
 // *LowSync*[hronous] means that every API is automatically awaited for you, forcing the code to run synchronously
 const db = new LowSync(adapter);
 
-// Initializes the data store to the provided data object (e.g., 'posts')
-db.data = { posts: [] };
-// After the write, the lowdb JSON file will reflect the current data in the database (in this case, db.json will be { posts: [] })
-db.write();
+// Read data from db.json (or whatever the database file is)
+db.read();
 
 
 // configure express to serve static files from public directory
 // ------------------------------------------------------------------
 // YOUR CODE
 
-
-
 // list posts
 app.get('/data', function(req, res){
-    res.send(db.get('posts').value());
+    res.send(db.data.posts);
 });
 
 // ----------------------------------------------------
 // add post - test using:
 //      curl http://localhost:3000/posts/ping/1/false
 // ----------------------------------------------------
-app.get('/posts/ /:id/:published', function(req, res){
+app.get('/posts/:title/:id/:published', function(req, res){
 
-    // YOUR CODE
-
+    const post = {
+        'id': req.params.id,
+        'title': req.params.title,
+        'published': req.params.published === 'true',
+    }
+    db.data.posts.push(post);
+    db.write();
+    console.log(db.data.posts);
+    res.send(db.data.posts);
 });
 
 // ----------------------------------------------------
@@ -60,7 +63,7 @@ app.get('/posts/ /:id/:published', function(req, res){
 app.get('/published/:boolean', function(req, res){
 
     // YOUR CODE
-
+    res.send(db.data.posts.filter((element) => element.published === true));
 });
 
 // ----------------------------------------------------
@@ -84,8 +87,6 @@ app.get('/delete/:id/', function(req, res){
 });
 
 // start server
-// -----------------------
-// YOUR CODE
 app.listen(3000, function(){
     console.log('Running on port 3000!')
 })
