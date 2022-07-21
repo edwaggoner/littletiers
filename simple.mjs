@@ -1,30 +1,32 @@
-// var low     = require('lowdb');
-// var fs      = require('lowdb/adapters/FileSync');
-// var adapter = new fs('db.json');
-// var db      = low(adapter);
-
+// Import Node core modules that we use here
 import { join, dirname } from 'path'
-import { Low, JSONFile } from 'lowdb'
 import { fileURLToPath } from 'url'
+// Import lowdb (in this case, the Sync[hronous] version)
+import { LowSync, JSONFileSync } from 'lowdb'
 
+// Determine what directory the app is running in, so that we can create the db that we're going to use in that directory
+    // Obtain url for file that's running
 const url = import.meta.url;
+    // Convert url to local path
 const path = fileURLToPath(url);
+    // Get parent directory path
 const __dirname = dirname(path);
+    // Append to parent directory path the name of the file we'll use as our db file
+const file = join(__dirname, 'db.json');
 
-// Use JSON file for storage
-const file = join(__dirname, 'db.json')
-const adapter = new JSONFile(file)
-const db = new Low(adapter)
+// Lowdb's adaptor for reading and writing JSON file that will serve as db file
+const adapter = new JSONFileSync(file);
+// Provides lowdb's API (Application Programming Interface) - i.e., what things lowdb can do in programs
+// *LowSync*[hronous] means that every API is automatically awaited for you, forcing the code to run synchronously
+const db = new LowSync(adapter);
 
-// Read data from JSON file, this will set db.data content
-await db.read()
+// Read data from db.json (or whatever the database file is)
+db.read();
 
-// If file.json doesn't exist, db.data will be null
-// Set default data
-db.data ||= { posts: [] }
+// Initializes the data store to the provided data object (e.g., 'posts')
+db.data = { posts: [] };
 
-
-// Create items using plain JS
+// Create data items using plain JS
 db.data.posts.push({id: 1, title: 'lowdb is excellent', published: true})
 db.data.posts.push({id: 2, title: 'great', published: true})
 db.data.posts.push({id: 3, title: 'new own', published: false})
@@ -35,9 +37,11 @@ db.data.posts.push({id: 4, title: 'random', published: false})
 // // And then post this way:
 // posts.push('hello world')
 
+// After the write, the lowdb JSON file will reflect the current data in the database (in this case, db.json will be { posts: [] })
+db.write();
 
-// Write db.data content to db.json
-db.write()
+
+// EXERCISES
 
 // Query an item using plain JS
 // db.data.posts[0]
