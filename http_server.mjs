@@ -29,7 +29,6 @@ const db = new LowSync(adapter);
 // Read data from db.json (or whatever the database file is)
 db.read();
 
-
 // configure express to serve static files from public directory
 app.use(express.static('public'));
 

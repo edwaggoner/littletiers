@@ -29,16 +29,14 @@ db.data = { posts: [] };
 // Create data items using plain JS
 db.data.posts.push({id: 1, title: 'lowdb is excellent', published: true})
 db.data.posts.push({id: 2, title: 'great', published: true})
-db.data.posts.push({id: 3, title: 'new own', published: false})
-db.data.posts.push({id: 4, title: 'random', published: false})
 
 // You can also use this syntax to create items, if you prefer:
 // const { posts } = db.data
 // // And then post this way:
 // posts.push('hello world')
 
-// After the write, the lowdb JSON file will reflect the current data in the database (in this case, db.json will be { posts: [] })
 db.write();
+// After the write, the lowdb JSON file will reflect the current data in the database (in this case, db.json will be { posts: [] })
 
 
 // EXERCISES
