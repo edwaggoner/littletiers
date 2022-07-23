@@ -31,8 +31,7 @@ db.read();
 
 
 // configure express to serve static files from public directory
-// ------------------------------------------------------------------
-// YOUR CODE
+app.use(express.static('public'));
 
 // list posts
 app.get('/data', function(req, res){
@@ -46,7 +45,7 @@ app.get('/data', function(req, res){
 app.get('/posts/:title/:id/:published', function(req, res){
 
     const post = {
-        'id': req.params.id,
+        'id': parseInt((req.params.id), 10),
         'title': req.params.title,
         'published': req.params.published === 'true',
     }

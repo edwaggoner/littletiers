@@ -8,17 +8,23 @@
 
     <main role="main" class="container" style="margin-top:20px">
 
-        <div id="status"></div>
-        <button type="button" class="btn btn-primary" onclick="data()">Show All Data</button><br>
+        <input type="text" id="id" placeholder="id">
+        <input type="text" id="title" placeholder="title">
+        <input type="text" id="published" placeholder="published">
+		<button type="button" class="btn btn-primary" onclick="post()">Submit</button>
+
 
     </main>
 
 </body>
 <script>
 
-function data() {
-    var status  = document.getElementById('status');
-    var url = '/data';
+function post() {
+    const id  		= document.getElementById('id').value;
+    const title  		= document.getElementById('title').value;
+    const published  	= document.getElementById('published').value;
+
+    const url = `/posts/${title}/${id}/${published}`;
 
     superagent
         .get(url)
@@ -27,7 +33,6 @@ function data() {
                 console.log(error)
             }
             else {console.log(response)
-                status.innerHTML = JSON.stringify(response.body);
             }
         });
 }
